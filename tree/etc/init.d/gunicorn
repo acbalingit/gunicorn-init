@@ -37,10 +37,10 @@ start_one()
 {
   local args name pid
   name=$1
-  args="--daemon --pid=$PID_DIR/$name.pid"
+  args="--daemon --pid=$PID_DIR/$name.pid --bind=$BIND_ADDRESS"
 
 
-  log_action_begin_msg "$name"
+  log_action_begin_msg "starting app $name"
   if [ -f "$PID_DIR/$name.pid" ]; then
     pid=`cat $PID_DIR/$name.pid`
 
