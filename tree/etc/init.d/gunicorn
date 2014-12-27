@@ -37,7 +37,8 @@ start_one()
 {
   local args name pid
   name=$1
-  args="--daemon --pid=$PID_DIR/$name.pid --log-file=$LOG_DIR/$name.log"
+  args="--daemon --pid=$PID_DIR/$name.pid"
+
 
   log_action_begin_msg "$name"
   if [ -f "$PID_DIR/$name.pid" ]; then
@@ -64,7 +65,7 @@ start_one()
       return 1
     fi
     [ "$WORKING_DIR" ] && cd $WORKING_DIR
-    [ "$LOG_LEVEL" ] && args="$args --log-level=$LOG_LEVEL"
+    [ "$LOG_LEVEL" ] && [ "$LOG_FILE" ] && args="$args  --log-file=$LOG_FILE --log-level=$LOG_LEVEL"
 
     $GUNICORN $args --config=$CONFIG_FILE -- $APP_MODULE
 
