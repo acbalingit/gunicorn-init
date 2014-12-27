@@ -37,7 +37,7 @@ start_one()
 {
   local args name pid
   name=$1
-  args="--daemon --pid=$PID_DIR/$name.pid --bind=$BIND_ADDRESS"
+  args="--daemon --pid=$PID_DIR/$name.pid"
 
 
   log_action_begin_msg "starting app $name"
@@ -66,7 +66,7 @@ start_one()
     fi
     [ "$WORKING_DIR" ] && cd $WORKING_DIR
     [ "$LOG_LEVEL" ] && [ "$LOG_FILE" ] && args="$args  --log-file=$LOG_FILE --log-level=$LOG_LEVEL"
-
+    args="$args  --bind=$BIND_ADDRESS"
     $GUNICORN $args --config=$CONFIG_FILE -- $APP_MODULE
 
     for var in $CONFIG_VARS; do
