@@ -63,10 +63,6 @@ start_one()
       log_action_end_msg 1 "no module name defined"
       return 1
     fi
-    if [ -z "$CONFIG_FILE" ]; then
-      log_action_end_msg 1 "no configuration file defined"
-      return 1
-    fi
     [ "$WORKING_DIR" ] && cd $WORKING_DIR
     [ "$LOG_LEVEL" ] && args="$args --log-level=$LOG_LEVEL"
 
