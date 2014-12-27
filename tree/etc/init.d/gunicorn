@@ -19,7 +19,7 @@ CONFIG_VARS="APP_MODULE CONFIG_FILE LOG_LEVEL WORKING_DIR"
 
 PID_DIR="/var/run/$NAME"
 LOG_DIR="/var/log/$NAME"
-
+USER="nobody"
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 . /lib/lsb/init-functions
@@ -66,7 +66,8 @@ start_one()
     fi
     [ "$WORKING_DIR" ] && cd $WORKING_DIR
     [ "$LOG_LEVEL" ] && [ "$LOG_FILE" ] && args="$args  --log-file=$LOG_FILE --log-level=$LOG_LEVEL"
-    args="$args  --bind=$BIND_ADDRESS"
+
+    args="$args  --bind=$BIND_ADDRESS -u $USER"
     $GUNICORN $args --config=$CONFIG_FILE -- $APP_MODULE
 
     for var in $CONFIG_VARS; do
